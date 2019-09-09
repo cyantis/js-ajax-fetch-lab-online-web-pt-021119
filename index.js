@@ -4,7 +4,7 @@ const user = 'cyantis';
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return 'c92937c6d1b15f2d31c054ce7d84e91dff6d02e2';
+  return '';
 }
 
 function forkRepo() {
