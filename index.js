@@ -2,34 +2,59 @@ const baseURL = 'https://api.github.com';
 const user = 'cyantis';
 
 function getToken() {
-  //change to your token to run in browser, but set
-  //back to '' before committing so all tests pass
   return '';
 }
 
 function forkRepo() {
   const repo = 'learn-co-curriculum/js-ajax-fetch-lab';
-  console.log(`${baseURL}/repos/${repo}/forks`);
-  //use fetch to fork it!
   fetch(
     `${baseURL}/repos/${repo}/forks`,
     {
       method: 'POST',
       headers: {
-        Authorization: `token ${getToken()}`,
+        Authorization: `token ${getToken()}`
       }
     }
-  ).then(res => console.log(res));
+  ).then(res => res.json()).then(json => showResults(json));
 }
 
 function showResults(json) {
-  //use this function to display the results from forking via the API
+  const result = document.createElement('p');
+  result.innerHTML = `<a href="${json.html_url}">${json.html_url}</a>`;
+  document.getElementById('results').appendChild(result);
 }
 
 function createIssue() {
-  //use this function to create an issue based on the values input in index.html
+  const obj = {
+    title: document.getElementById('title').value,
+    body: document.getElementById('body').value
+  };
+
+  fetch(
+    `${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
+    {
+      method: 'POST',
+      title: obj.title,
+      body: obj.body,
+      headers: {
+        Authorization: `token ${getToken()}`
+      }
+    }
+  );
 }
 
 function getIssues() {
-  //once an issue is submitted, fetch all open issues to see the issues you are creating
+  const fetchData = fetch(
+    `${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `token ${getToken()}`
+      }
+    }
+  ).then(res => res.json()).then(json => json);
+
+  const result = document.createElement('p');
+  result.innerHTML = fetchData;
+  document.getElementById('issues').appendChild(result);
 }
