@@ -28,19 +28,18 @@ function createIssue() {
   const obj = {
     title: document.getElementById('title').value,
     body: document.getElementById('body').value
-  };
+  }
 
   fetch(
     `${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
     {
       method: 'POST',
-      title: obj.title,
-      body: obj.body,
+      body: JSON.stringify(obj),
       headers: {
         Authorization: `token ${getToken()}`
       }
     }
-  );
+  ).then(res => getIssues());
 }
 
 function getIssues() {
