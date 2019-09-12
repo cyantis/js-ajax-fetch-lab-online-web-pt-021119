@@ -43,17 +43,22 @@ function createIssue() {
 }
 
 function getIssues() {
-  const fetchData = fetch(
+  fetch(
     `${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
     {
-      method: 'GET',
       headers: {
         Authorization: `token ${getToken()}`
       }
     }
-  ).then(res => res.json()).then(json => json);
+  ).then(res => res.json()).then(json => issueLis(json));
+}
 
-  const result = document.createElement('p');
-  result.innerHTML = fetchData;
+function issueLis(data){
+  const result = document.createElement('ul');
+
+  for(let i in data){
+    result.innerHTML += `<li>${data[i].title}</li>`;
+  }
+
   document.getElementById('issues').appendChild(result);
 }
