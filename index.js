@@ -34,7 +34,7 @@ function createIssue() {
     `${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
     {
       method: 'POST',
-      body: JSON.stringify(obj),
+      body: JSON.stringify(obj)//,
       headers: {
         Authorization: `token ${getToken()}`
       }
@@ -56,8 +56,8 @@ function getIssues() {
 function issueLis(data){
   const result = document.createElement('ul');
 
-  for(let i in data){
-    result.innerHTML += `<li>${data[i].title}</li>`;
+  for(let i of data){
+    result.innerHTML += `<li>${i.title}</li>`;
   }
 
   document.getElementById('issues').appendChild(result);
